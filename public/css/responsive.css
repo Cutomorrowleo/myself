@@ -1,0 +1,561 @@
+﻿/* ============================================
+   RESPONSIVE.CSS — Mobile & Reduced Motion
+   ============================================ */
+
+/* ── Mobile bottom nav (hidden on desktop) ── */
+.mobile-nav {
+  display: none;
+}
+
+/* ── Drag hint: show desktop text by default, hide mobile ── */
+.drag-hint__text-mobile {
+  display: none;
+}
+
+/* ── Tablet adjustments (768px – 1023px) ── */
+@media (max-width: 1023px) and (min-width: 769px) {
+  /* Floating toolbar — smaller on tablet */
+  .floating-toolbar {
+    top: 12px;
+    padding: 4px 6px;
+  }
+
+  .toolbar-btn {
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  /* Hide tools toolbar on tablet */
+  .tools-toolbar {
+    display: none;
+  }
+
+  /* Work stack decks — compact on tablet */
+  .work-stack__deck {
+    width: 210px;
+    height: 260px;
+  }
+
+  .work-stack__name {
+    font-size: var(--text-base);
+  }
+}
+
+/* ── Mobile adjustments (768px and below) ── */
+@media (max-width: 768px) {
+  /* Increase card tap targets */
+  .card {
+    min-height: 80px;
+  }
+
+  /* Hide decorative stickers beyond 3rd on small screens */
+  .sticker:nth-child(n+4) {
+    display: none;
+  }
+
+  /* Larger game controls */
+  .color-swatch {
+    width: 40px;
+    height: 40px;
+  }
+
+  .game-btn {
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-base);
+  }
+
+  /* ── Hide desktop-only UI elements ── */
+  .floating-toolbar,
+  .social-dock,
+  .tools-toolbar,
+  .claude-badge {
+    display: none !important;
+  }
+
+  /* Show mobile bottom nav */
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-nav);
+    background: var(--color-white);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 6px 0 env(safe-area-inset-bottom, 8px);
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .mobile-nav__btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+    color: var(--color-ink-muted);
+  }
+
+  .mobile-nav__btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobile-nav__btn span {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .mobile-nav__btn.nav-active {
+    color: var(--color-accent);
+    background: rgba(243, 123, 117, 0.08);
+  }
+
+  .mobile-nav__btn:active {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  /* Drag hint: show mobile text, hide desktop */
+  .drag-hint__text-desktop {
+    display: none;
+  }
+
+  .drag-hint__text-mobile {
+    display: inline;
+  }
+
+  /* Move drag hint above mobile nav */
+  .drag-hint {
+    bottom: calc(60px + env(safe-area-inset-bottom, 8px) + 12px);
+    top: auto;
+  }
+
+  /* Profile avatar smaller on mobile */
+  .language-switch {
+    top: 13px;
+    right: 58px;
+    width: 76px;
+    height: 32px;
+    padding: 3px;
+  }
+
+  .language-switch__option {
+    font-size: 10px;
+  }
+
+  .profile-avatar {
+    width: 34px;
+    height: 34px;
+    top: 12px;
+    right: 14px;
+  }
+
+  /* Resume panel full-width on mobile */
+  .resume-panel__sheet {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .resume-panel__header {
+    padding: 16px 20px;
+  }
+
+  .resume-panel__body {
+    padding: 20px;
+  }
+
+  /* Canvas logo smaller */
+  .canvas-name {
+    top: 14px;
+    left: 16px;
+  }
+
+  .canvas-name img {
+    height: 18px;
+  }
+
+  /* Canvas elements are repositioned and resized via JS mobileOverrides.
+     No additional CSS scale needed — sizes are set directly. */
+
+  /* Work stack decks — compact on mobile */
+  .work-stack__deck {
+    width: 190px;
+    height: 230px;
+  }
+
+  .work-stack__name {
+    font-size: var(--text-sm);
+  }
+
+  .work-stack__tags span {
+    font-size: 8px;
+    padding: 2px 6px;
+  }
+
+  /* Info cards — smaller on mobile */
+  .info-card {
+    padding: 12px;
+    border-radius: 24px;
+  }
+
+  .info-card__title {
+    font-size: var(--text-base);
+  }
+
+  /* Hero headline — bigger on mobile */
+  .hero-headline {
+    font-size: clamp(3rem, 5vw + 1.5rem, 4.5rem);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-sm);
+    margin-top: var(--space-md);
+  }
+
+  /* Speech bubbles — smaller */
+  .speech-bubble {
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 10px;
+  }
+
+  /* Web slider — tighter on mobile */
+  .web-slider {
+    width: 95vw;
+    padding: 2vh 0;
+  }
+
+  .web-slider__title {
+    font-size: var(--text-lg);
+  }
+
+  /* Stacked slide info layout on mobile for consistency */
+  .web-slide__info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: 12px 0 0;
+  }
+
+  .web-slide__tags {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .web-slide__visit {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  /* Packaging slide info — same stacked layout */
+  .pkg-slide__info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: 12px 0 0;
+  }
+
+  .pkg-slide__tags {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pkg-slide__cta {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  /* Force desktop aspect ratio for browser mockup on mobile */
+  .browser-mockup {
+    flex: none;
+    aspect-ratio: 16 / 10;
+  }
+
+  .browser-mockup__content {
+    position: relative;
+  }
+
+  .browser-mockup__screenshot {
+    object-fit: cover;
+    object-position: top left;
+  }
+
+  /* Back button — adjust for mobile nav */
+  .page-back {
+    top: var(--space-md);
+    left: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--text-xs);
+  }
+
+  .page-back span {
+    display: none;
+  }
+
+  /* Disable draggable sticker interactions on mobile (conflicts with canvas pan) */
+  .draggable-sticker {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  /* Custom cursor hidden on touch */
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+/* ── Small phone adjustments (480px and below) ── */
+@media (max-width: 480px) {
+  .hero-headline {
+    font-size: clamp(2.5rem, 5vw + 1rem, 3.5rem);
+  }
+
+  .hero-tagline {
+    font-size: var(--text-base);
+  }
+
+  .card-title {
+    font-size: var(--text-lg);
+  }
+
+  .browser-mockup__actions {
+    display: none;
+  }
+
+  .web-slider__arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .coming-soon-page__title {
+    font-size: var(--text-2xl);
+  }
+
+  /* Stickers already resized via JS mobileOverrides */
+
+  /* Work stack even more compact */
+  .work-stack__deck {
+    width: 170px;
+    height: 210px;
+  }
+
+  .work-stack__card-desc {
+    display: none;
+  }
+
+  /* Mobile nav tighter */
+  .mobile-nav__btn {
+    padding: 4px 8px;
+  }
+
+  .mobile-nav__btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mobile-nav__btn span {
+    font-size: 9px;
+  }
+}
+
+/* ── Large screen optimizations (QHD / 4K) ── */
+/* Canvas elements scale via defaultZoom in config.js.
+   Sub-pages (overlays) need explicit max-width bumps. */
+
+@media (min-width: 1440px) {
+  /* Web slider */
+  .web-slider {
+    max-width: 900px;
+  }
+
+  /* Game */
+  .game-container {
+    max-width: 900px;
+  }
+
+  /* Case study */
+  .case-study {
+    max-width: 960px;
+  }
+
+  /* Brand grid */
+  .brand-grid {
+    max-width: 1100px;
+  }
+
+  /* Project page */
+  .project-page-inner {
+    max-width: 1000px;
+  }
+
+  /* About */
+  .about-page-inner {
+    max-width: 1200px;
+  }
+
+  /* Contact */
+  .contact-inner {
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 1920px) {
+  /* Web slider */
+  .web-slider {
+    max-width: 1100px;
+  }
+
+  /* Game */
+  .game-container {
+    max-width: 1100px;
+  }
+
+  .game-title {
+    font-size: var(--text-3xl);
+  }
+
+  .game-subtitle {
+    font-size: var(--text-xl);
+  }
+
+  /* Case study */
+  .case-study {
+    max-width: 1100px;
+  }
+
+  /* Brand grid */
+  .brand-grid {
+    max-width: 1300px;
+  }
+
+  .brand-grid__title {
+    font-size: var(--text-3xl);
+  }
+
+  /* Project page */
+  .project-page-inner {
+    max-width: 1200px;
+  }
+
+  .project-hero-title {
+    font-size: clamp(2.5rem, 3vw, 3.5rem);
+  }
+
+  /* About */
+  .about-page-inner {
+    max-width: 1400px;
+  }
+
+  /* Contact */
+  .contact-inner {
+    max-width: 800px;
+  }
+
+  .contact-statement {
+    font-size: clamp(2rem, 3vw, 3rem);
+  }
+
+  /* Web slide text */
+  .web-slider__title {
+    font-size: var(--text-2xl);
+  }
+
+  .web-slide__title,
+  .pkg-slide__title {
+    font-size: var(--text-lg);
+  }
+}
+
+@media (min-width: 2560px) {
+  /* Web slider */
+  .web-slider {
+    max-width: 1400px;
+  }
+
+  /* Game */
+  .game-container {
+    max-width: 1400px;
+  }
+
+  .game-title {
+    font-size: clamp(2.5rem, 3vw, 3.5rem);
+  }
+
+  /* Case study */
+  .case-study {
+    max-width: 1300px;
+  }
+
+  .case-study__title {
+    font-size: var(--text-3xl);
+  }
+
+  /* Brand grid */
+  .brand-grid {
+    max-width: 1600px;
+  }
+
+  /* Project page */
+  .project-page-inner {
+    max-width: 1400px;
+  }
+
+  /* About */
+  .about-page-inner {
+    max-width: 1600px;
+  }
+
+  .about-photo img {
+    max-height: 720px;
+  }
+
+  /* Contact */
+  .contact-inner {
+    max-width: 900px;
+  }
+}
+
+/* ── Prefers reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  /* Kill all CSS animations */
+  .sticker.idle-animate,
+  .sticker.idle-animate-alt {
+    animation: none !important;
+  }
+
+  .drag-hint svg {
+    animation: none !important;
+  }
+
+  /* Instant transitions */
+  .card,
+  .custom-cursor .cursor-ring,
+  .page-back,
+  .minimap {
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Skip loader */
+  .loader {
+    display: none !important;
+  }
+}
+
+

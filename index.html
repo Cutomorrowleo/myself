@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Shruti Sonali — Design Engineer. Brand identity, packaging systems, and web experiences built at the intersection of design instinct and AI-assisted development.">
+  <meta name="theme-color" content="#F5F0E8">
+
+  <title>Shruti Sonali — Non Linear Creative</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Shruti Sonali — Non Linear Creative">
+  <meta property="og:description" content="Brand to web, designed and built with AI.">
+  <meta property="og:image" content="https://www.portfoliobyshruti.com/Portfolio%20Thumbnail.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shruti Sonali — Non Linear Creative">
+  <meta name="twitter:description" content="Brand to web, designed and built with AI.">
+  <meta name="twitter:image" content="https://www.portfoliobyshruti.com/Portfolio%20Thumbnail.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://www.portfoliobyshruti.com/assets/Favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="fonts/ClashDisplay/ClashDisplay_Complete/Fonts/WEB/fonts/ClashDisplay-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Satoshi/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/canvas.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/stickers.css">
+  <link rel="stylesheet" href="css/loader.css">
+  <link rel="stylesheet" href="css/cursor.css">
+  <link rel="stylesheet" href="css/minimap.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+  <!-- Skip to content -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- ── LOADER ── -->
+  <div class="loader" role="status" aria-label="Loading portfolio">
+    <div class="loader-sticker-trail" aria-hidden="true"></div>
+    <div class="loader-counter-wrap" aria-hidden="true">
+      <span class="loader-counter">0</span>
+    </div>
+  </div>
+
+  <!-- ── FLOATING CANVAS LOGO ── -->
+  <div class="canvas-name" style="opacity: 0;" aria-hidden="true">
+    <img src="https://www.portfoliobyshruti.com/SVG/Logo.svg" alt="Shruti Sonali" draggable="false">
+  </div>
+
+  <!-- ── MOBILE BOTTOM NAV ── -->
+  <nav class="mobile-nav" aria-label="Mobile navigation" style="opacity: 0;">
+    <button class="mobile-nav__btn" data-nav-target="hero" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="mobile-nav__btn" data-nav-target="work" aria-label="Work">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <span>Work</span>
+    </button>
+    <button class="mobile-nav__btn" data-nav-target="play" aria-label="Play">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span>Play</span>
+    </button>
+    <button class="mobile-nav__btn" data-nav-target="about" aria-label="About">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>About</span>
+    </button>
+    <button class="mobile-nav__btn" data-nav-target="contact" aria-label="Contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span>Contact</span>
+    </button>
+  </nav>
+
+  <!-- ── PROFILE AVATAR (top-right) ── -->
+  <div class="language-switch" role="group" aria-label="Language switch, English selected">
+    <button class="language-switch__option" type="button" data-language="zh" aria-pressed="false">中</button>
+    <button class="language-switch__option is-active" type="button" data-language="en" aria-pressed="true">EN</button>
+  </div>
+
+  <button class="profile-avatar" aria-label="Open resume" id="profileAvatar">
+    <img src="https://www.portfoliobyshruti.com/assets/Profile Picture2.png" alt="Shruti Sonali" draggable="false">
+  </button>
+
+  <!-- ── RESUME SIDE PANEL (Notion-style) ── -->
+  <div class="resume-panel" id="resumePanel" aria-hidden="true">
+    <div class="resume-panel__backdrop" id="resumeBackdrop"></div>
+    <div class="resume-panel__sheet">
+      <div class="resume-panel__header">
+        <div class="resume-panel__profile">
+          <img src="https://www.portfoliobyshruti.com/assets/Profile Picture2.png" alt="Shruti Sonali" class="resume-panel__photo">
+          <div>
+            <h2 class="resume-panel__name">Shruti Sonali</h2>
+            <p class="resume-panel__title">Multidisciplinary Designer · Brand, Visual & Content</p>
+          </div>
+        </div>
+        <button class="resume-panel__close" id="resumeClose" aria-label="Close resume">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="resume-panel__body">
+        <section class="resume-section">
+          <h3 class="resume-section__heading">About This Portfolio</h3>
+          <p class="resume-section__text">This portfolio was built without Figma. No mockups, no handoff, no "I'll build it when I'm ready." Just a mood board, Claude Code, and a designer who finally found a tool that keeps up with how she thinks. I described what I wanted. It built. I reacted. It refined. The result looks exactly like what I imagined — because the creative direction was never outsourced, only the syntax.</p>
+        </section>
+
+        <section class="resume-section">
+          <h3 class="resume-section__heading">About Me</h3>
+          <p class="resume-section__text">Multidisciplinary Designer with 4+ years of experience spanning brand identity, visual systems, content design, and web UI. Brings a rare combination of strategic visual thinking and hands-on execution — from developing brand narratives and visual languages to designing production-ready assets across digital and print surfaces. Architecture-trained, meaning spatial reasoning and attention to detail are instinctive. Has led end-to-end visual projects for global brands and professional communities, maintaining consistency across complex, multi-channel systems. Early adopter of AI-assisted design workflows — uses AI tools to accelerate creative production, iterate faster, and extend visual systems without compromising craft or brand integrity.</p>
+        </section>
+
+        <section class="resume-section">
+          <h3 class="resume-section__heading">Experience</h3>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Multidisciplinary Designer</span>
+              <span class="resume-entry__date">Jan 2023 — Present</span>
+            </div>
+            <span class="resume-entry__company">Independent · Gurugram — Remote</span>
+            <ul class="resume-entry__list">
+              <li>Led brand identity, visual design, and content design projects for 10+ clients across B2B SaaS, DTC, and professional media — developing full visual systems including brand narratives, typography, colour, iconography, illustration, and guidelines documentation</li>
+              <li>Designed and built production web experiences end-to-end — from information architecture and content strategy through high-fidelity UI, motion design, and live implementation using AI-assisted development tools</li>
+              <li>Created and maintained visual asset libraries and design systems in Figma — ensuring consistent brand expression across web, marketing, and content surfaces for clients managing distributed teams</li>
+              <li>Produced visual content at scale — thumbnails, campaign assets, pitch decks, and brand collateral — developing strong instincts for what communicates clearly across platforms and contexts</li>
+              <li>Used AI tools (Claude Code, Freepik AI) to accelerate asset creation, visual iteration, and content production — maintaining brand quality and craft while significantly reducing production timelines</li>
+            </ul>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Visual Design Consultant</span>
+              <span class="resume-entry__date">Nov 2024 — Jul 2025</span>
+            </div>
+            <span class="resume-entry__company">Sylva Inc · Remote</span>
+            <ul class="resume-entry__list">
+              <li>Provided visual design and brand consultancy for 3 professional community platforms — PreSales Collective, Operators, and conference properties — developing distinct visual identities and content design systems for each</li>
+              <li>Designed the complete visual language for each platform: brand strategy, typography, colour systems, illustration style, and iconography — producing comprehensive brand guidelines and asset libraries for ongoing team use</li>
+              <li>Collaborated with product, engineering, and content teams throughout — ensuring visual consistency across web UI, marketing content, and event materials simultaneously</li>
+            </ul>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Visual Experience Consultant</span>
+              <span class="resume-entry__date">Oct 2022 — Apr 2024</span>
+            </div>
+            <span class="resume-entry__company">Mycelium Sona Biotech Pvt. Ltd. · Pune</span>
+            <ul class="resume-entry__list">
+              <li>Led a full brand identity redesign for Mycelium India — developing a new visual language that aligned with the company's cutting-edge biotech positioning while maintaining credibility with enterprise clients</li>
+              <li>Ensured visual consistency across all marketing channels — managing creative direction for digital content, packaging design, product collateral, and brand communications</li>
+              <li>Managed all creative design aspects of the brand — from brand guidelines and typography systems to marketing materials, product labels, and event design</li>
+            </ul>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Brand & Graphic Designer</span>
+              <span class="resume-entry__date">Jan 2022 — Sep 2022</span>
+            </div>
+            <span class="resume-entry__company">Loud Mob Media · Pune</span>
+            <p class="resume-entry__desc">Designed full brand identities for agency clients across entertainment and tech — logo systems, typography, colour, illustration, iconography, and packaging — producing print-ready production files with accurate colour management and technical specifications.</p>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Graphic Designer</span>
+              <span class="resume-entry__date">Aug 2021 — Jan 2022</span>
+            </div>
+            <span class="resume-entry__company">Corporate Culture · Pune</span>
+            <p class="resume-entry__desc">Produced event design, 3D stage concepts, and marketing collateral — required spatial thinking and the ability to design experiential, large-format visual systems for corporate events.</p>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Design Intern</span>
+              <span class="resume-entry__date">Nov 2020 — May 2021</span>
+            </div>
+            <span class="resume-entry__company">Dream Sports Foundation (Dream11) · Mumbai (Remote)</span>
+            <p class="resume-entry__desc">Designed social content and brand templates for India's largest fantasy sports platform with 100M+ users — built scalable template systems for consistent, high-volume content production across campaigns.</p>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h3 class="resume-section__heading">Skills</h3>
+          <div class="resume-tags">
+            <span class="resume-tag">Brand Identity</span>
+            <span class="resume-tag">Visual Design</span>
+            <span class="resume-tag">Content Design</span>
+            <span class="resume-tag">UI Design</span>
+            <span class="resume-tag">Design Systems</span>
+            <span class="resume-tag">Typography</span>
+            <span class="resume-tag">Iconography</span>
+            <span class="resume-tag">Illustration</span>
+            <span class="resume-tag">Motion Design</span>
+            <span class="resume-tag">Packaging Design</span>
+            <span class="resume-tag">Information Architecture</span>
+            <span class="resume-tag">Figma (Advanced)</span>
+            <span class="resume-tag">Adobe Illustrator</span>
+            <span class="resume-tag">Adobe Photoshop</span>
+            <span class="resume-tag">Webflow</span>
+            <span class="resume-tag">VS Code</span>
+            <span class="resume-tag">Sanity CMS</span>
+            <span class="resume-tag">Claude Code</span>
+            <span class="resume-tag">Freepik AI</span>
+            <span class="resume-tag">AI-Assisted Design</span>
+            <span class="resume-tag">Rapid Prototyping</span>
+            <span class="resume-tag">GSAP</span>
+            <span class="resume-tag">Lenis</span>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h3 class="resume-section__heading">Notable Projects</h3>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">PreSales Collective — Brand Identity & Web</span>
+              <span class="resume-entry__date">2025</span>
+            </div>
+            <span class="resume-entry__company">presalescollective.com</span>
+            <p class="resume-entry__desc">End-to-end brand identity and web design for a global professional community of 50K+ presales professionals — visual system, content design, course pages, and event marketing all under a unified but flexible design language.</p>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Mycelium India — Rebranding</span>
+              <span class="resume-entry__date">2022–2024</span>
+            </div>
+            <span class="resume-entry__company">Mycelium Sona Biotech</span>
+            <p class="resume-entry__desc">Full brand identity redesign for a biotech company — repositioned visual language to reflect cutting-edge technology and premium quality while maintaining scientific credibility across all collaterals.</p>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Kindred Studio Website</span>
+              <span class="resume-entry__date">Jan 2026</span>
+            </div>
+            <span class="resume-entry__company">kindredwebstudio.com</span>
+            <p class="resume-entry__desc">Designed and built the Kindred studio brand and website — visual identity, content design, and live implementation using AI tools; shipped in under 4 weeks.</p>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h3 class="resume-section__heading">Education</h3>
+          <div class="resume-entry">
+            <div class="resume-entry__header">
+              <span class="resume-entry__role">Bachelor of Architecture (B.Arch)</span>
+              <span class="resume-entry__date">2016 — 2021</span>
+            </div>
+            <span class="resume-entry__company">Lovely Professional University, Punjab</span>
+            <p class="resume-entry__desc">5-year programme in spatial design, systems thinking, technical drawing, and visual communication at multiple scales. Foundations that transfer directly to content design, information architecture, and building visual systems with structural rigour.</p>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h3 class="resume-section__heading">Contact</h3>
+          <div class="resume-contact">
+            <a href="mailto:shrutisonali38@gmail.com" class="resume-contact__link">shrutisonali38@gmail.com</a>
+            <a href="https://www.linkedin.com/in/shruti-sonali/" target="_blank" rel="noopener" class="resume-contact__link">LinkedIn</a>
+            <a href="tel:+916280818360" class="resume-contact__link">+91-6280818360</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CHAI RECIPE SIDE PANEL (notebook style) ── -->
+  <div class="resume-panel chai-panel" id="chaiPanel" aria-hidden="true">
+    <div class="resume-panel__backdrop" id="chaiBackdrop"></div>
+    <div class="resume-panel__sheet chai-panel__sheet">
+
+      <!-- Close button floating -->
+      <button class="chai-close" id="chaiClose" aria-label="Close recipe">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <!-- Notebook page content -->
+      <div class="chai-notebook" id="chaiNotebook">
+
+        <!-- Notebook ring holes decoration -->
+        <div class="chai-rings" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <!-- Title area -->
+        <div class="chai-title-area">
+          <p class="chai-eyebrow">a recipe from my kitchen</p>
+          <h2 class="chai-title">Ginger Chai</h2>
+          <p class="chai-subtitle-note">the kind that fills the whole house<br>with warmth before the first sip</p>
+        </div>
+
+        <!-- Margin note -->
+        <div class="chai-margin-note chai-margin-note--top" aria-hidden="true">
+          no teabags.<br>no shortcuts.
+        </div>
+
+        <!-- Intro scribble -->
+        <div class="chai-intro-note">
+          <p>This is my mom's recipe, passed down through years of mornings. Every Indian kitchen makes chai differently &mdash; this is how ours does. Patience, spice, and a heavy hand with the ginger.</p>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="chai-ingredients-section">
+          <h3 class="chai-list-heading">What you'll need:</h3>
+          <ul class="chai-ingredients-list">
+            <li><span class="chai-qty">1 cup</span> water</li>
+            <li><span class="chai-qty">1 cup</span> whole milk</li>
+            <li><span class="chai-qty">2 tsp</span> Assam tea <span class="chai-aside">(loose leaf, CTC grade)</span></li>
+            <li><span class="chai-qty">1 inch</span> fresh ginger, crushed</li>
+            <li><span class="chai-qty">3</span> green cardamom pods, cracked</li>
+            <li><span class="chai-qty">1 small</span> cinnamon stick</li>
+            <li><span class="chai-qty">2&ndash;3</span> cloves</li>
+            <li><span class="chai-qty">2 tsp</span> sugar <span class="chai-aside">(or to taste)</span></li>
+          </ul>
+          <p class="chai-scribble">^ the dust-grade stuff from the Indian store, not the fancy whole leaf!</p>
+        </div>
+
+        <!-- Divider doodle -->
+        <div class="chai-divider" aria-hidden="true">
+          <svg viewBox="0 0 200 12" fill="none"><path d="M4 6 Q20 2 40 6 Q60 10 80 6 Q100 2 120 6 Q140 10 160 6 Q180 2 196 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+        </div>
+
+        <!-- Steps -->
+        <h3 class="chai-list-heading">How to make it:</h3>
+
+        <div class="chai-step">
+          <div class="chai-step__illustration">
+            <img src="https://www.portfoliobyshruti.com/assets/Chai Illustrations/Chai recipe illustrations/chai 1.png" alt="Crushing spices" loading="lazy" draggable="false">
+          </div>
+          <div class="chai-step__content">
+            <span class="chai-step__num">1.</span>
+            <h4 class="chai-step__heading">Crush the spices</h4>
+            <p class="chai-step__body">Lightly crush the cardamom pods and ginger with the back of a spoon or mortar &amp; pestle. You want them cracked open, not pulverised &mdash; just enough to release the oils.</p>
+            <p class="chai-step__scribble">"if you can't smell it from across the kitchen, you haven't crushed it enough" &mdash; mom</p>
+          </div>
+        </div>
+
+        <div class="chai-step chai-step--flip">
+          <div class="chai-step__illustration">
+            <img src="https://www.portfoliobyshruti.com/assets/Chai Illustrations/Chai recipe illustrations/chai 2.png" alt="Simmering spices" loading="lazy" draggable="false">
+          </div>
+          <div class="chai-step__content">
+            <span class="chai-step__num">2.</span>
+            <h4 class="chai-step__heading">Boil with spices &amp; tea</h4>
+            <p class="chai-step__body">Bring the water to a boil. Add the crushed ginger, cardamom, cinnamon stick, cloves, and the loose Assam tea leaves. Let it simmer on low for 3&ndash;4 minutes until dark, fragrant, and strong.</p>
+            <p class="chai-step__scribble">the tea goes in NOW, not with the milk. it needs to steep and get that deep colour.</p>
+          </div>
+        </div>
+
+        <div class="chai-step">
+          <div class="chai-step__illustration">
+            <img src="https://www.portfoliobyshruti.com/assets/Chai Illustrations/Chai recipe illustrations/chai 3.png" alt="Adding milk" loading="lazy" draggable="false">
+          </div>
+          <div class="chai-step__content">
+            <span class="chai-step__num">3.</span>
+            <h4 class="chai-step__heading">Add the milk</h4>
+            <p class="chai-step__body">Once the tea has steeped and the water is dark and strong, pour in the milk. Bring it back to a gentle boil. Watch it carefully &mdash; chai loves to boil over when you look away.</p>
+            <p class="chai-step__scribble">seriously, don't look away</p>
+          </div>
+        </div>
+
+        <div class="chai-step chai-step--flip">
+          <div class="chai-step__illustration">
+            <img src="https://www.portfoliobyshruti.com/assets/Chai Illustrations/Chai recipe illustrations/chai 4.png" alt="Simmering to colour" loading="lazy" draggable="false">
+          </div>
+          <div class="chai-step__content">
+            <span class="chai-step__num">4.</span>
+            <h4 class="chai-step__heading">Let it find its colour</h4>
+            <p class="chai-step__body">Reduce to low heat and simmer for 2&ndash;3 minutes. Add the sugar now. The chai should turn a deep, warm terracotta &mdash; not too pale, not too dark.</p>
+            <p class="chai-step__scribble">you'll know it's ready when it looks like it could warm you up just by looking at it</p>
+          </div>
+        </div>
+
+        <div class="chai-step">
+          <div class="chai-step__illustration">
+            <img src="https://www.portfoliobyshruti.com/assets/Chai Illustrations/Chai recipe illustrations/chai 5.png" alt="Straining into cup" loading="lazy" draggable="false">
+          </div>
+          <div class="chai-step__content">
+            <span class="chai-step__num">5.</span>
+            <h4 class="chai-step__heading">Strain &amp; serve</h4>
+            <p class="chai-step__body">Pour through a fine strainer into your favourite cup. The first sip should hit you with ginger, then cardamom, then warmth all the way down.</p>
+            <p class="chai-step__scribble">best enjoyed with biscuits, gossip, or a good deadline.</p>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="chai-closing-note">
+          <p>Chai is not a beverage. It's a ritual, a pause, a conversation starter.</p>
+          <p class="chai-sign">&mdash; Shruti</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SOCIAL DOCK (macOS style) ── -->
+  <div class="social-dock" style="opacity: 0;" aria-label="Social links">
+    <a href="https://www.behance.net/shrutisonali_studio" target="_blank" rel="noopener" class="dock-link" aria-label="Behance">
+      <img src="https://www.portfoliobyshruti.com/assets/dock/behance.png" alt="Behance" draggable="false">
+    </a>
+    <a href="https://www.linkedin.com/in/shruti-sonali/" target="_blank" rel="noopener" class="dock-link" aria-label="LinkedIn">
+      <img src="https://www.portfoliobyshruti.com/assets/dock/linkedin.png" alt="LinkedIn" draggable="false">
+    </a>
+    <a href="mailto:shrutisonali38@gmail.com" class="dock-link" aria-label="Email">
+      <img src="https://www.portfoliobyshruti.com/assets/dock/gmail.png" alt="Gmail" draggable="false">
+    </a>
+  </div>
+
+  <!-- ── TOOLS TOOLBAR (left-center, design-tool style) ── -->
+  <div class="tools-toolbar" style="opacity: 0;" aria-label="Design tools I use">
+    <div class="tool-item" data-tooltip="Figma">
+      <img src="https://www.portfoliobyshruti.com/assets/tools/figma.png" alt="Figma" draggable="false">
+    </div>
+    <div class="tool-item" data-tooltip="Webflow">
+      <img src="https://www.portfoliobyshruti.com/assets/tools/webflow.png" alt="Webflow" draggable="false">
+    </div>
+    <div class="tool-divider" aria-hidden="true"></div>
+    <div class="tool-item" data-tooltip="Photoshop">
+      <img src="https://www.portfoliobyshruti.com/assets/tools/photoshop.png" alt="Adobe Photoshop" draggable="false">
+    </div>
+    <div class="tool-item" data-tooltip="Illustrator">
+      <img src="https://www.portfoliobyshruti.com/assets/tools/illustrator.png" alt="Adobe Illustrator" draggable="false">
+    </div>
+    <div class="tool-divider" aria-hidden="true"></div>
+    <div class="tool-item" data-tooltip="Claude Code">
+      <img src="https://www.portfoliobyshruti.com/assets/tools/claude.svg" alt="Claude Code" draggable="false">
+    </div>
+  </div>
+
+  <!-- ── MADE WITH CLAUDE CODE BADGE ── -->
+  <div class="claude-badge" style="opacity: 0;" aria-label="Made with Claude Code">
+    <img src="https://www.portfoliobyshruti.com/assets/made with claude code_1.svg" alt="Made with Claude Code" draggable="false">
+  </div>
+
+  <!-- ── MAIN CANVAS ── -->
+  <main id="main-content" class="viewport" role="application" aria-label="Interactive portfolio canvas — drag to explore">
+    <div class="world" aria-label="Portfolio elements">
+      <!-- Elements are placed dynamically by element-placer.js -->
+    </div>
+  </main>
+
+  <!-- ── DRAG HINT ── -->
+  <div class="drag-hint" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+    <span class="drag-hint__text-desktop">Drag to explore</span>
+    <span class="drag-hint__text-mobile">Swipe to explore</span>
+  </div>
+
+  <!-- ── CUSTOM CURSOR ── -->
+  <div class="custom-cursor" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring">
+      <span class="cursor-label"></span>
+    </div>
+  </div>
+
+  <!-- minimap removed -->
+
+  <!-- ── BACK BUTTON (for page overlays) ── -->
+  <button class="page-back" aria-label="Back to playground">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    <span>Back to Playground</span>
+  </button>
+
+  <!-- ── SCRIPTS ── -->
+  <script src="js/utils.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/canvas-engine.js"></script>
+  <script src="js/element-placer.js"></script>
+  <script src="js/parallax.js"></script>
+  <script src="js/loader.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/magnetic.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/card-transitions.js"></script>
+  <script src="js/minimap.js"></script>
+  <script src="js/connect-dots.js"></script>
+  <script src="js/coloring-book.js"></script>
+  <script src="js/naruto-runner.js"></script>
+  <script src="js/resume-panel.js"></script>
+  <script src="js/chai-panel.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <!-- Awwwards Ribbon -->
+  <div id="awwwards" style="position: fixed; z-index: 999; transform: translateY(-50%); top: 50%;  right: 0"><a href="https://www.awwwards.com/sites/portfolio-by-shruti" target="_blank"><svg width="53.08" height="171.358"><path class="js-color-bg" fill="#9BD4D7" d="M0 0h53.08v171.358H0z"></path><g class="js-color-text" fill="#fff"><path d="M20.047 153.665v-1.9h3.888v-4.093h-3.888v-1.9h10.231v1.9h-4.59v4.093h4.59v1.9zM29.898 142.236c-.331.565-.784.997-1.359 1.294s-1.222.446-1.944.446c-.721 0-1.369-.149-1.943-.446a3.316 3.316 0 0 1-1.36-1.294c-.331-.564-.497-1.232-.497-2.002s.166-1.438.497-2.002a3.316 3.316 0 0 1 1.36-1.294c.574-.297 1.223-.445 1.943-.445.723 0 1.369.148 1.944.445a3.307 3.307 0 0 1 1.359 1.294c.331.564.497 1.232.497 2.002s-.166 1.438-.497 2.002m-1.703-3.347c-.435-.33-.967-.496-1.601-.496-.633 0-1.166.166-1.601.496-.433.332-.649.78-.649 1.346 0 .564.217 1.013.649 1.345.435.331.968.497 1.601.497.634 0 1.166-.166 1.601-.497.435-.332.649-.78.649-1.345.001-.566-.214-1.014-.649-1.346M22.911 134.852v-1.813h1.186a3.335 3.335 0 0 1-.951-1.009 2.423 2.423 0 0 1-.352-1.271c0-.682.19-1.229.57-1.645.381-.413.932-.621 1.652-.621h5.262v1.812h-4.721c-.419 0-.727.096-.921.285-.195.19-.292.447-.292.769 0 .302.115.58.35.833.234.254.577.458 1.03.613.454.156.993.234 1.616.234h2.938v1.813h-7.367zM29.898 125.136a3.314 3.314 0 0 1-1.359 1.294c-.575.297-1.222.445-1.944.445-.721 0-1.369-.148-1.943-.445a3.322 3.322 0 0 1-1.36-1.294c-.331-.565-.497-1.232-.497-2.002 0-.771.166-1.438.497-2.003a3.313 3.313 0 0 1 1.36-1.293c.574-.297 1.223-.446 1.943-.446.723 0 1.369.149 1.944.446s1.028.728 1.359 1.293.497 1.232.497 2.003c.001.769-.166 1.436-.497 2.002m-1.703-3.347c-.435-.331-.967-.497-1.601-.497-.633 0-1.166.166-1.601.497-.433.331-.649.778-.649 1.345 0 .564.217 1.013.649 1.344.435.332.968.498 1.601.498.634 0 1.166-.166 1.601-.498.435-.331.649-.779.649-1.344.001-.567-.214-1.014-.649-1.345M22.911 117.75v-1.812h1.199c-.419-.265-.742-.586-.972-.966s-.345-.784-.345-1.213c0-.272.05-.569.146-.892l1.682.336a1.429 1.429 0 0 0-.205.76c0 .576.261 1.048.783 1.418.521.37 1.342.557 2.461.557h2.617v1.812h-7.366zM29.812 111.252c-.391.511-.857.851-1.403 1.016l-.776-1.446c.381-.138.68-.329.893-.577.215-.249.321-.544.321-.885a1.2 1.2 0 0 0-.168-.658c-.112-.175-.294-.263-.548-.263-.225 0-.406.105-.548.313-.142.21-.291.534-.446.973-.019.068-.058.17-.117.307-.224.565-.506 1.004-.848 1.315-.34.313-.779.467-1.314.467-.381 0-.727-.102-1.039-.306a2.185 2.185 0 0 1-.744-.84 2.554 2.554 0 0 1-.279-1.207c0-.497.105-.949.314-1.359.211-.408.506-.725.886-.949l.993 1.082c-.43.292-.644.686-.644 1.184a.84.84 0 0 0 .154.504.471.471 0 0 0 .401.212c.176 0 .338-.103.49-.307.15-.205.334-.604.547-1.199.205-.564.474-1.001.805-1.308.332-.308.756-.46 1.271-.46.721 0 1.299.229 1.732.687s.65 1.057.65 1.797c.001.759-.194 1.396-.583 1.907M35.481 17.006l-4.782 14.969h-3.266l-2.584-9.682-2.584 9.682h-3.268l-4.782-14.969h3.713l2.673 10.276 2.525-10.276h3.445l2.524 10.276 2.674-10.276zM37.978 27.163c1.426 0 2.496 1.068 2.496 2.495 0 1.425-1.07 2.495-2.496 2.495-1.425 0-2.494-1.07-2.494-2.495-.001-1.427 1.069-2.495 2.494-2.495"></path></g></svg></a></div>
+
+</body>
+</html>
+
+
