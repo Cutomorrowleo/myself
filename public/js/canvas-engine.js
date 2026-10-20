@@ -11,7 +11,11 @@ class CanvasEngine {
     this.panX = 0;
     this.panY = 0;
     this.zoom = CONFIG.defaultZoom;
+    this.defaultZoom = CONFIG.defaultZoom;
+    this.minZoom = CONFIG.getMinZoom ? CONFIG.getMinZoom() : CONFIG.minZoom;
     this.locked = false;
+    this.viewportWidth = viewport.clientWidth;
+    this.viewportHeight = viewport.clientHeight;
 
     // Drag state
     this.isDragging = false;
@@ -46,6 +50,7 @@ class CanvasEngine {
     this._onPointerMove = this._onPointerMove.bind(this);
     this._onPointerUp = this._onPointerUp.bind(this);
     this._onWheel = this._onWheel.bind(this);
+    this._onClick = this._onClick.bind(this);
 
     this._bindEvents();
   }
@@ -56,6 +61,7 @@ class CanvasEngine {
     window.addEventListener('pointerup', this._onPointerUp);
     window.addEventListener('pointercancel', this._onPointerUp);
     this.viewport.addEventListener('wheel', this._onWheel, { passive: false });
+    this.viewport.addEventListener('click', this._onClick);
 
     // Prevent context menu on long press
     this.viewport.addEventListener('contextmenu', e => e.preventDefault());
@@ -110,7 +116,7 @@ class CanvasEngine {
       const pointers = Array.from(this.activePointers.values());
       const currentDist = distance(pointers[0].x, pointers[0].y, pointers[1].x, pointers[1].y);
       const scale = currentDist / this.pinchStartDist;
-      this.zoom = clamp(this.pinchStartZoom * scale, CONFIG.minZoom, CONFIG.maxZoom);
+      this.zoom = clamp(this.pinchStartZoom * scale, this.minZoom, CONFIG.maxZoom);
       this._applyTransform();
       return;
     }
@@ -191,7 +197,7 @@ class CanvasEngine {
     // If ctrl is pressed, zoom
     if (e.ctrlKey || e.metaKey) {
       const zoomDelta = -e.deltaY * 0.001;
-      this.zoom = clamp(this.zoom + zoomDelta, CONFIG.minZoom, CONFIG.maxZoom);
+      this.zoom = clamp(this.zoom + zoomDelta, this.minZoom, CONFIG.maxZoom);
     } else {
       this.panX += dx / this.zoom;
       this.panY += dy / this.zoom;
@@ -207,6 +213,11 @@ class CanvasEngine {
     if (target && this.onClickElement) {
       this.onClickElement(target, target.dataset.elementId);
     }
+  }
+
+  _onClick(e) {
+    if (this.locked || e.detail !== 0) return;
+    this._handleClick(e);
   }
 
   _applyTransform() {
@@ -257,7 +268,33 @@ class CanvasEngine {
     // Center the hero element in the viewport
     this.panX = (vw / 2) / this.zoom - CONFIG.startX;
     this.panY = (vh / 2) / this.zoom - CONFIG.startY;
+    this.viewportWidth = vw;
+    this.viewportHeight = vh;
     this._applyTransform();
+  }
+
+  /** Preserve the current world-space center while adapting to a new viewport. */
+  refreshLayout() {
+    if (this.locked) return;
+
+    const oldWidth = this.viewportWidth || this.viewport.clientWidth;
+    const oldHeight = this.viewportHeight || this.viewport.clientHeight;
+    const centerX = (oldWidth / 2) / this.zoom - this.panX;
+    const centerY = (oldHeight / 2) / this.zoom - this.panY;
+    const nextWidth = this.viewport.clientWidth;
+    const nextHeight = this.viewport.clientHeight;
+    const nextDefaultZoom = CONFIG.getDefaultZoom ? CONFIG.getDefaultZoom(nextWidth) : CONFIG.defaultZoom;
+    const zoomRatio = this.defaultZoom > 0 ? this.zoom / this.defaultZoom : 1;
+
+    this.defaultZoom = nextDefaultZoom;
+    this.minZoom = CONFIG.getMinZoom ? CONFIG.getMinZoom(nextWidth) : CONFIG.minZoom;
+    this.zoom = clamp(nextDefaultZoom * zoomRatio, this.minZoom, CONFIG.maxZoom);
+    this.panX = (nextWidth / 2) / this.zoom - centerX;
+    this.panY = (nextHeight / 2) / this.zoom - centerY;
+    this.viewportWidth = nextWidth;
+    this.viewportHeight = nextHeight;
+    this._applyTransform();
+    if (this.onPanUpdate) this.onPanUpdate(this.panX, this.panY);
   }
 
   /** Get current world coordinate at viewport center */
@@ -309,6 +346,7 @@ class CanvasEngine {
     window.removeEventListener('pointerup', this._onPointerUp);
     window.removeEventListener('pointercancel', this._onPointerUp);
     this.viewport.removeEventListener('wheel', this._onWheel);
+    this.viewport.removeEventListener('click', this._onClick);
   }
 }
 

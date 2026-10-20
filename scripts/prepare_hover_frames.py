@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image, ImageFilter
 
 
-ROOT = Path(r"C:\Users\26133\Documents\myself")
+ROOT = Path(__file__).resolve().parents[1]
 GENERATED = Path(r"C:\Users\26133\.codex\generated_images\019ea16e-0bff-7a11-a961-03440696409f")
 OUT = ROOT / "public" / "assets" / "home-stickers"
 

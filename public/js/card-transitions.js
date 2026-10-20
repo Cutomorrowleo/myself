@@ -10,6 +10,12 @@ class CardTransitions {
     this.savedState = null;
     this.activePage = null;
     this.backBtn = document.querySelector('.page-back');
+    this.triggerEl = null;
+    this.caseStudyTrigger = null;
+    this.modalBackgroundState = null;
+    this.modalKeyHandler = null;
+    this.backButtonTimer = null;
+    this.modalFocusTimers = [];
 
     // Create page overlays
     this._createOverlays();
@@ -56,6 +62,17 @@ class CardTransitions {
     this.workStackOverlay.setAttribute('role', 'dialog');
     this.workStackOverlay.setAttribute('aria-modal', 'true');
     document.body.appendChild(this.workStackOverlay);
+
+    [
+      this.projectOverlay,
+      this.gameOverlay,
+      this.aboutOverlay,
+      this.contactOverlay,
+      this.workStackOverlay
+    ].forEach(overlay => {
+      overlay.setAttribute('aria-hidden', 'true');
+      overlay.tabIndex = -1;
+    });
   }
 
   _bindBackButton() {
@@ -72,9 +89,11 @@ class CardTransitions {
   }
 
   /** Open a card — determine type and open appropriate page */
-  openCard(elementId) {
+  openCard(elementId, triggerEl = null) {
     const cfg = CONFIG.elements.find(el => el.id === elementId);
     if (!cfg) return;
+
+    this.triggerEl = triggerEl instanceof HTMLElement ? triggerEl : document.activeElement;
 
     // Save engine state
     this.savedState = this.engine.saveState();
@@ -194,7 +213,8 @@ class CardTransitions {
   }
 
   /** Open Naruto runner game in the game overlay (native canvas, Chrome T-Rex engine) */
-  openNarutoGame() {
+  openNarutoGame(triggerEl = null) {
+    this.triggerEl = triggerEl instanceof HTMLElement ? triggerEl : document.activeElement;
     this.savedState = this.engine.saveState();
     this.engine.lock();
     if (this.nav) this.nav.hide();
@@ -631,7 +651,7 @@ class CardTransitions {
     overlay.querySelectorAll('.pkg-slide__cta').forEach(btn => {
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.dataset.pkgIndex);
-        this._openCaseStudy(projects[idx]);
+        this._openCaseStudy(projects[idx], btn);
       });
     });
 
@@ -709,16 +729,17 @@ class CardTransitions {
     this.workStackOverlay.querySelectorAll('.brand-grid-card').forEach(card => {
       const handler = () => {
         const idx = parseInt(card.dataset.brandIndex);
-        this._openCaseStudy(projects[idx]);
+        this._openCaseStudy(projects[idx], card);
       };
       card.addEventListener('click', handler);
       card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
     });
   }
 
-  _openCaseStudy(project) {
+  _openCaseStudy(project, triggerEl = null) {
     this.activePage = 'case-study';
     this._caseStudyFromGrid = true;
+    if (triggerEl instanceof HTMLElement) this.caseStudyTrigger = triggerEl;
 
     // Find next project within the same category (brand or packaging)
     let projects = CONFIG.brandProjects;
@@ -882,7 +903,173 @@ class CardTransitions {
     }
   }
 
-  _showOverlay(overlay, bgColor) {
+  _captureBackgroundState() {
+    if (this.modalBackgroundState) return;
+
+    this.modalBackgroundState = Array.from(document.body.children)
+      .filter(el => el instanceof HTMLElement && !['SCRIPT', 'STYLE'].includes(el.tagName))
+      .map(el => ({
+        el,
+        inert: el.inert,
+        ariaHidden: el.getAttribute('aria-hidden')
+      }));
+  }
+
+  _restoreBackgroundState(clear = true) {
+    if (!this.modalBackgroundState) return;
+
+    this.modalBackgroundState.forEach(({ el, inert, ariaHidden }) => {
+      el.inert = inert;
+      if (ariaHidden === null) el.removeAttribute('aria-hidden');
+      else el.setAttribute('aria-hidden', ariaHidden);
+    });
+
+    if (clear) this.modalBackgroundState = null;
+  }
+
+  _applyModalState(overlay) {
+    this._captureBackgroundState();
+    this._restoreBackgroundState(false);
+
+    this.modalBackgroundState.forEach(({ el }) => {
+      const isActiveLayer = el === overlay || el === this.backBtn;
+      el.inert = !isActiveLayer;
+      if (!isActiveLayer) el.setAttribute('aria-hidden', 'true');
+    });
+
+    overlay.inert = false;
+    overlay.setAttribute('aria-hidden', 'false');
+  }
+
+  _getFocusable(overlay) {
+    const selector = [
+      'a[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    return Array.from(overlay.querySelectorAll(selector)).filter(el => {
+      const style = window.getComputedStyle(el);
+      return !el.hidden && style.display !== 'none' && style.visibility !== 'hidden';
+    });
+  }
+
+  _clearModalFocusTimers() {
+    this.modalFocusTimers.forEach(timer => clearTimeout(timer));
+    this.modalFocusTimers = [];
+  }
+
+  _moveFocusIntoOverlay(overlay, preferredFocus = null) {
+    this._clearModalFocusTimers();
+
+    const heading = overlay.querySelector('h1, h2');
+    const preferredTarget = preferredFocus instanceof HTMLElement
+      && preferredFocus.isConnected
+      && overlay.contains(preferredFocus)
+      ? preferredFocus
+      : null;
+    const target = preferredTarget || heading || this._getFocusable(overlay)[0] || overlay;
+
+    const focus = () => {
+      if (!overlay.isConnected || overlay.inert || overlay.getAttribute('aria-hidden') === 'true') return;
+      if (document.activeElement === this.backBtn || overlay.contains(document.activeElement)) return;
+
+      try {
+        target.focus({ preventScroll: true });
+      } catch (error) {
+        target.focus();
+      }
+    };
+
+    focus();
+    requestAnimationFrame(focus);
+    this.modalFocusTimers = [80, 180].map(delay => setTimeout(focus, delay));
+  }
+
+  _focusOverlay(overlay, preferredFocus = null) {
+    if (this.modalKeyHandler) {
+      document.removeEventListener('keydown', this.modalKeyHandler);
+    }
+
+    const heading = overlay.querySelector('h1, h2');
+    if (heading) {
+      if (!heading.id) heading.id = `${overlay.id}-title`;
+      heading.tabIndex = -1;
+      overlay.setAttribute('aria-labelledby', heading.id);
+    } else {
+      overlay.setAttribute('aria-label', 'Portfolio detail');
+    }
+
+    this.modalKeyHandler = event => {
+      if (event.key !== 'Tab' || !this.activePage) return;
+
+      const focusable = [this.backBtn, ...this._getFocusable(overlay)]
+        .filter(el => el instanceof HTMLElement && el.tabIndex >= 0 && !el.inert);
+
+      if (focusable.length === 0) {
+        event.preventDefault();
+        overlay.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !overlay.contains(document.activeElement))) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', this.modalKeyHandler);
+
+    this._moveFocusIntoOverlay(overlay, preferredFocus);
+  }
+
+  _showBackButton(overlay) {
+    if (!this.backBtn) return;
+
+    clearTimeout(this.backButtonTimer);
+    const show = () => {
+      this.backBtn.classList.add('visible');
+      this.backBtn.setAttribute('aria-hidden', 'false');
+      this.backBtn.tabIndex = 0;
+      this.backBtn.setAttribute('aria-controls', overlay.id);
+    };
+
+    if (prefersReducedMotion()) show();
+    else this.backButtonTimer = setTimeout(show, 300);
+  }
+
+  _hideBackButton() {
+    clearTimeout(this.backButtonTimer);
+    this.backButtonTimer = null;
+    if (!this.backBtn) return;
+
+    this.backBtn.classList.remove('visible');
+    this.backBtn.setAttribute('aria-hidden', 'true');
+    this.backBtn.removeAttribute('aria-controls');
+    this.backBtn.tabIndex = -1;
+  }
+
+  _releaseModal(triggerEl = null) {
+    this._clearModalFocusTimers();
+    if (this.modalKeyHandler) {
+      document.removeEventListener('keydown', this.modalKeyHandler);
+      this.modalKeyHandler = null;
+    }
+    this._restoreBackgroundState();
+
+    requestAnimationFrame(() => {
+      if (triggerEl instanceof HTMLElement && triggerEl.isConnected) triggerEl.focus();
+    });
+  }
+
+  _showOverlay(overlay, bgColor, preferredFocus = null) {
     if (window.PortfolioI18n) {
       window.PortfolioI18n.apply(overlay);
     }
@@ -891,13 +1078,13 @@ class CardTransitions {
       overlay.style.backgroundColor = bgColor;
     }
 
+    this._applyModalState(overlay);
     overlay.classList.add('active');
     overlay.scrollTop = 0;
+    this._focusOverlay(overlay, preferredFocus);
+    this._showBackButton(overlay);
 
     if (prefersReducedMotion()) {
-      if (this.backBtn) {
-        this.backBtn.classList.add('visible');
-      }
       return;
     }
 
@@ -906,10 +1093,6 @@ class CardTransitions {
       { opacity: 1, duration: 0.5, ease: 'power2.out' }
     );
 
-    // Show back button
-    if (this.backBtn) {
-      setTimeout(() => this.backBtn.classList.add('visible'), 300);
-    }
   }
 
   _animateProjectContent() {
@@ -980,7 +1163,7 @@ class CardTransitions {
         this.projectOverlay.className = 'page-overlay project-page';
         // Re-show the grid
         this.workStackOverlay.style.opacity = '';
-        this._showOverlay(this.workStackOverlay);
+        this._showOverlay(this.workStackOverlay, null, this.caseStudyTrigger);
       };
 
       if (prefersReducedMotion()) { fadeOut(); return; }
@@ -989,7 +1172,7 @@ class CardTransitions {
     }
 
     // Hide back button
-    if (this.backBtn) this.backBtn.classList.remove('visible');
+    this._hideBackButton();
 
     // Get active overlay
     let overlay;
@@ -1020,6 +1203,9 @@ class CardTransitions {
       this.workStackOverlay.className = 'page-overlay work-stack-page';
       this.activePage = null;
       this._caseStudyFromGrid = false;
+      this._releaseModal(this.triggerEl);
+      this.triggerEl = null;
+      this.caseStudyTrigger = null;
 
       // Restore engine
       if (this.savedState) {

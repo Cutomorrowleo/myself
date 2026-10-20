@@ -8,7 +8,6 @@ class Navigation {
     this.toolbar = document.querySelector('.floating-toolbar');
     this.canvasName = document.querySelector('.canvas-name');
     this.socialDock = document.querySelector('.social-dock');
-    this.claudeBadge = document.querySelector('.claude-badge');
     this.toolsToolbar = document.querySelector('.tools-toolbar');
     this.profileAvatar = document.querySelector('.profile-avatar');
     this.mobileNav = document.querySelector('.mobile-nav');
@@ -50,7 +49,7 @@ class Navigation {
 
   /** Show floating UI with animation */
   reveal() {
-    const elements = [this.toolbar, this.canvasName, this.socialDock, this.claudeBadge, this.toolsToolbar, this.profileAvatar, this.mobileNav].filter(Boolean);
+    const elements = [this.toolbar, this.canvasName, this.socialDock, this.toolsToolbar, this.profileAvatar, this.mobileNav].filter(Boolean);
 
     if (prefersReducedMotion()) {
       elements.forEach(el => {
@@ -83,14 +82,6 @@ class Navigation {
       );
     }
 
-    // Claude badge fades in from bottom-left
-    if (this.claudeBadge) {
-      gsap.fromTo(this.claudeBadge,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.5 }
-      );
-    }
-
     // Tools toolbar slides in from left
     if (this.toolsToolbar) {
       gsap.fromTo(this.toolsToolbar,
@@ -118,7 +109,7 @@ class Navigation {
 
   /** Hide floating UI */
   hide() {
-    const elements = [this.toolbar, this.canvasName, this.socialDock, this.claudeBadge, this.toolsToolbar, this.profileAvatar, this.mobileNav].filter(Boolean);
+    const elements = [this.toolbar, this.canvasName, this.socialDock, this.toolsToolbar, this.profileAvatar, this.mobileNav].filter(Boolean);
     elements.forEach(el => {
       gsap.to(el, { opacity: 0, duration: 0.3, ease: 'power2.in' });
     });
@@ -126,7 +117,7 @@ class Navigation {
 
   /** Show floating UI */
   show() {
-    const elements = [this.toolbar, this.canvasName, this.socialDock, this.claudeBadge, this.toolsToolbar, this.profileAvatar, this.mobileNav].filter(Boolean);
+    const elements = [this.toolbar, this.canvasName, this.socialDock, this.toolsToolbar, this.profileAvatar, this.mobileNav].filter(Boolean);
     elements.forEach(el => {
       gsap.to(el, { opacity: 1, duration: 0.4, ease: 'power2.out' });
     });

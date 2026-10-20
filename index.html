@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Shruti Sonali — Design Engineer. Brand identity, packaging systems, and web experiences built at the intersection of design instinct and AI-assisted development.">
   <meta name="theme-color" content="#F5F0E8">
 
@@ -13,6 +13,8 @@
   <meta property="og:description" content="Brand to web, designed and built with AI.">
   <meta property="og:image" content="https://www.portfoliobyshruti.com/Portfolio%20Thumbnail.png">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://myself-one-alpha.vercel.app/">
+  <link rel="canonical" href="https://myself-one-alpha.vercel.app/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Shruti Sonali — Non Linear Creative">
   <meta name="twitter:description" content="Brand to web, designed and built with AI.">
@@ -25,8 +27,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="preload" href="fonts/ClashDisplay/ClashDisplay_Complete/Fonts/WEB/fonts/ClashDisplay-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/Satoshi/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/variables.css">
@@ -36,13 +36,11 @@
   <link rel="stylesheet" href="css/stickers.css">
   <link rel="stylesheet" href="css/loader.css">
   <link rel="stylesheet" href="css/cursor.css">
-  <link rel="stylesheet" href="css/minimap.css">
   <link rel="stylesheet" href="css/pages.css">
   <link rel="stylesheet" href="css/responsive.css">
 
   <!-- GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
 </head>
 <body>
 
@@ -58,8 +56,17 @@
   </div>
 
   <!-- ── FLOATING CANVAS LOGO ── -->
-  <div class="canvas-name" style="opacity: 0;" aria-hidden="true">
-    <img src="https://www.portfoliobyshruti.com/SVG/Logo.svg" alt="Shruti Sonali" draggable="false">
+  <div class="canvas-name botanical-wordmark botanical-wordmark--corner"
+       data-botanical-wordmark="cutomorrow"
+       style="opacity: 0;"
+       role="img"
+       aria-label="Cutomorrow">
+    <span class="botanical-wordmark__canvas" aria-hidden="true">
+      <img class="botanical-wordmark__frame" src="/assets/brand/cutomorrow-frame-1.png" alt="" draggable="false">
+      <img class="botanical-wordmark__frame" src="/assets/brand/cutomorrow-frame-2.png" alt="" draggable="false">
+      <img class="botanical-wordmark__frame" src="/assets/brand/cutomorrow-frame-3.png" alt="" draggable="false">
+      <img class="botanical-wordmark__frame" src="/assets/brand/cutomorrow-frame-4.png" alt="" draggable="false">
+    </span>
   </div>
 
   <!-- ── MOBILE BOTTOM NAV ── -->
@@ -93,18 +100,18 @@
   </div>
 
   <button class="profile-avatar" aria-label="Open resume" id="profileAvatar">
-    <img src="https://www.portfoliobyshruti.com/assets/Profile Picture2.png" alt="Shruti Sonali" draggable="false">
+    <img src="/assets/profile-avatar.png" alt="Shruti Sonali" draggable="false">
   </button>
 
   <!-- ── RESUME SIDE PANEL (Notion-style) ── -->
-  <div class="resume-panel" id="resumePanel" aria-hidden="true">
-    <div class="resume-panel__backdrop" id="resumeBackdrop"></div>
+  <div class="resume-panel" id="resumePanel" role="dialog" aria-modal="true" aria-labelledby="resumePanelTitle" aria-hidden="true" tabindex="-1">
+    <div class="resume-panel__backdrop" id="resumeBackdrop" aria-hidden="true"></div>
     <div class="resume-panel__sheet">
       <div class="resume-panel__header">
         <div class="resume-panel__profile">
           <img src="https://www.portfoliobyshruti.com/assets/Profile Picture2.png" alt="Shruti Sonali" class="resume-panel__photo">
           <div>
-            <h2 class="resume-panel__name">Shruti Sonali</h2>
+            <h2 class="resume-panel__name" id="resumePanelTitle" tabindex="-1">Shruti Sonali</h2>
             <p class="resume-panel__title">Multidisciplinary Designer · Brand, Visual & Content</p>
           </div>
         </div>
@@ -274,8 +281,8 @@
   </div>
 
   <!-- ── CHAI RECIPE SIDE PANEL (notebook style) ── -->
-  <div class="resume-panel chai-panel" id="chaiPanel" aria-hidden="true">
-    <div class="resume-panel__backdrop" id="chaiBackdrop"></div>
+  <div class="resume-panel chai-panel" id="chaiPanel" role="dialog" aria-modal="true" aria-labelledby="chaiPanelTitle" aria-hidden="true" tabindex="-1">
+    <div class="resume-panel__backdrop" id="chaiBackdrop" aria-hidden="true"></div>
     <div class="resume-panel__sheet chai-panel__sheet">
 
       <!-- Close button floating -->
@@ -294,7 +301,7 @@
         <!-- Title area -->
         <div class="chai-title-area">
           <p class="chai-eyebrow">a recipe from my kitchen</p>
-          <h2 class="chai-title">Ginger Chai</h2>
+          <h2 class="chai-title" id="chaiPanelTitle" tabindex="-1">Ginger Chai</h2>
           <p class="chai-subtitle-note">the kind that fills the whole house<br>with warmth before the first sip</p>
         </div>
 
@@ -436,13 +443,10 @@
     </div>
   </div>
 
-  <!-- ── MADE WITH CLAUDE CODE BADGE ── -->
-  <div class="claude-badge" style="opacity: 0;" aria-label="Made with Claude Code">
-    <img src="https://www.portfoliobyshruti.com/assets/made with claude code_1.svg" alt="Made with Claude Code" draggable="false">
-  </div>
-
   <!-- ── MAIN CANVAS ── -->
-  <main id="main-content" class="viewport" role="application" aria-label="Interactive portfolio canvas — drag to explore">
+  <main id="main-content" class="viewport" aria-label="Interactive portfolio canvas">
+    <h1 class="sr-only">Ao Li - Design Engineer, Brand and Web</h1>
+    <p class="sr-only">Explore selected web, brand, packaging, and interaction design work on a draggable visual canvas.</p>
     <div class="world" aria-label="Portfolio elements">
       <!-- Elements are placed dynamically by element-placer.js -->
     </div>
@@ -465,10 +469,8 @@
     </div>
   </div>
 
-  <!-- minimap removed -->
-
   <!-- ── BACK BUTTON (for page overlays) ── -->
-  <button class="page-back" aria-label="Back to playground">
+  <button class="page-back" type="button" aria-label="Back to playground" aria-hidden="true" tabindex="-1">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <path d="M19 12H5M12 19l-7-7 7-7"/>
     </svg>
@@ -487,7 +489,6 @@
   <script src="js/magnetic.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/card-transitions.js"></script>
-  <script src="js/minimap.js"></script>
   <script src="js/connect-dots.js"></script>
   <script src="js/coloring-book.js"></script>
   <script src="js/naruto-runner.js"></script>
@@ -497,9 +498,6 @@
 
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
-
-  <!-- Awwwards Ribbon -->
-  <div id="awwwards" style="position: fixed; z-index: 999; transform: translateY(-50%); top: 50%;  right: 0"><a href="https://www.awwwards.com/sites/portfolio-by-shruti" target="_blank"><svg width="53.08" height="171.358"><path class="js-color-bg" fill="#9BD4D7" d="M0 0h53.08v171.358H0z"></path><g class="js-color-text" fill="#fff"><path d="M20.047 153.665v-1.9h3.888v-4.093h-3.888v-1.9h10.231v1.9h-4.59v4.093h4.59v1.9zM29.898 142.236c-.331.565-.784.997-1.359 1.294s-1.222.446-1.944.446c-.721 0-1.369-.149-1.943-.446a3.316 3.316 0 0 1-1.36-1.294c-.331-.564-.497-1.232-.497-2.002s.166-1.438.497-2.002a3.316 3.316 0 0 1 1.36-1.294c.574-.297 1.223-.445 1.943-.445.723 0 1.369.148 1.944.445a3.307 3.307 0 0 1 1.359 1.294c.331.564.497 1.232.497 2.002s-.166 1.438-.497 2.002m-1.703-3.347c-.435-.33-.967-.496-1.601-.496-.633 0-1.166.166-1.601.496-.433.332-.649.78-.649 1.346 0 .564.217 1.013.649 1.345.435.331.968.497 1.601.497.634 0 1.166-.166 1.601-.497.435-.332.649-.78.649-1.345.001-.566-.214-1.014-.649-1.346M22.911 134.852v-1.813h1.186a3.335 3.335 0 0 1-.951-1.009 2.423 2.423 0 0 1-.352-1.271c0-.682.19-1.229.57-1.645.381-.413.932-.621 1.652-.621h5.262v1.812h-4.721c-.419 0-.727.096-.921.285-.195.19-.292.447-.292.769 0 .302.115.58.35.833.234.254.577.458 1.03.613.454.156.993.234 1.616.234h2.938v1.813h-7.367zM29.898 125.136a3.314 3.314 0 0 1-1.359 1.294c-.575.297-1.222.445-1.944.445-.721 0-1.369-.148-1.943-.445a3.322 3.322 0 0 1-1.36-1.294c-.331-.565-.497-1.232-.497-2.002 0-.771.166-1.438.497-2.003a3.313 3.313 0 0 1 1.36-1.293c.574-.297 1.223-.446 1.943-.446.723 0 1.369.149 1.944.446s1.028.728 1.359 1.293.497 1.232.497 2.003c.001.769-.166 1.436-.497 2.002m-1.703-3.347c-.435-.331-.967-.497-1.601-.497-.633 0-1.166.166-1.601.497-.433.331-.649.778-.649 1.345 0 .564.217 1.013.649 1.344.435.332.968.498 1.601.498.634 0 1.166-.166 1.601-.498.435-.331.649-.779.649-1.344.001-.567-.214-1.014-.649-1.345M22.911 117.75v-1.812h1.199c-.419-.265-.742-.586-.972-.966s-.345-.784-.345-1.213c0-.272.05-.569.146-.892l1.682.336a1.429 1.429 0 0 0-.205.76c0 .576.261 1.048.783 1.418.521.37 1.342.557 2.461.557h2.617v1.812h-7.366zM29.812 111.252c-.391.511-.857.851-1.403 1.016l-.776-1.446c.381-.138.68-.329.893-.577.215-.249.321-.544.321-.885a1.2 1.2 0 0 0-.168-.658c-.112-.175-.294-.263-.548-.263-.225 0-.406.105-.548.313-.142.21-.291.534-.446.973-.019.068-.058.17-.117.307-.224.565-.506 1.004-.848 1.315-.34.313-.779.467-1.314.467-.381 0-.727-.102-1.039-.306a2.185 2.185 0 0 1-.744-.84 2.554 2.554 0 0 1-.279-1.207c0-.497.105-.949.314-1.359.211-.408.506-.725.886-.949l.993 1.082c-.43.292-.644.686-.644 1.184a.84.84 0 0 0 .154.504.471.471 0 0 0 .401.212c.176 0 .338-.103.49-.307.15-.205.334-.604.547-1.199.205-.564.474-1.001.805-1.308.332-.308.756-.46 1.271-.46.721 0 1.299.229 1.732.687s.65 1.057.65 1.797c.001.759-.194 1.396-.583 1.907M35.481 17.006l-4.782 14.969h-3.266l-2.584-9.682-2.584 9.682h-3.268l-4.782-14.969h3.713l2.673 10.276 2.525-10.276h3.445l2.524 10.276 2.674-10.276zM37.978 27.163c1.426 0 2.496 1.068 2.496 2.495 0 1.425-1.07 2.495-2.496 2.495-1.425 0-2.494-1.07-2.494-2.495-.001-1.427 1.069-2.495 2.494-2.495"></path></g></svg></a></div>
 
 </body>
 </html>

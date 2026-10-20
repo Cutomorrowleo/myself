@@ -8,9 +8,22 @@
    HERO — Large centered headline
    ═══════════════════════════════════════════ */
 .hero-element {
+  --hero-wordmark-height: 128px;
   text-align: center;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: calc(var(--z-elements) + 5);
+}
+
+.botanical-wordmark--hero .botanical-wordmark__canvas {
+  width: auto;
+  height: var(--hero-wordmark-height);
+  aspect-ratio: 1086 / 384;
+  margin-inline: auto;
+}
+
+.botanical-wordmark--hero .hero-subtitle {
+  margin-top: 6px;
+  white-space: nowrap;
 }
 
 .hero-headline {

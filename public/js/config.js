@@ -7,6 +7,34 @@
    — Overlap and layering creates depth
    ============================================ */
 
+const getResponsiveCanvasZoom = (width = window.innerWidth) => {
+  const points = [
+    [320, 0.52],
+    [480, 0.58],
+    [768, 0.85],
+    [1024, 1.21],
+    [1440, 1.26],
+    [1920, 1.3],
+    [2560, 1.4]
+  ];
+
+  if (width <= points[0][0]) return points[0][1];
+  if (width >= points[points.length - 1][0]) return points[points.length - 1][1];
+
+  for (let i = 1; i < points.length; i += 1) {
+    const [nextWidth, nextZoom] = points[i];
+    const [prevWidth, prevZoom] = points[i - 1];
+    if (width <= nextWidth) {
+      const progress = (width - prevWidth) / (nextWidth - prevWidth);
+      return prevZoom + (nextZoom - prevZoom) * progress;
+    }
+  }
+
+  return 1;
+};
+
+const getMinimumCanvasZoom = (width = window.innerWidth) => width < 768 ? 0.3 : 0.4;
+
 const CONFIG = {
   canvas: {
     width: 5000,
@@ -18,20 +46,11 @@ const CONFIG = {
   startX: 2500,
   startY: 2000,
 
-  minZoom: (() => {
-    const w = window.innerWidth;
-    return w < 768 ? 0.3 : 0.4;
-  })(),
+  getMinZoom: getMinimumCanvasZoom,
+  getDefaultZoom: getResponsiveCanvasZoom,
+  minZoom: getMinimumCanvasZoom(),
   maxZoom: 1.5,
-  defaultZoom: (() => {
-    const w = window.innerWidth;
-    if (w >= 2560) return 1.4;
-    if (w >= 1920) return 1.3;
-    if (w >= 1440) return 1.26;
-    if (w >= 1024) return 1.21;
-    if (w >= 768) return 0.85;
-    return 0.55;
-  })(),
+  defaultZoom: getResponsiveCanvasZoom(),
 
   inertiaDecay: 0.92,
   inertiaDuration: 1.2,
@@ -39,7 +58,7 @@ const CONFIG = {
 
   navTargets: {
     hero:    { x: 2500, y: 2000 },
-    work:    { x: 2500, y: 2000 },
+    work:    { x: 2200, y: 1800 },
     play:    { x: 3200, y: 1800 },
     about:   { x: 2100, y: 2300 },
     contact: { x: 2900, y: 2250 },
@@ -47,7 +66,7 @@ const CONFIG = {
 
   // ── Mobile element position overrides (minimal adjustments) ──
   // Only move elements that are off-screen or per user request.
-  // At zoom 0.55 on 375px, visible x: ~2159–2841, y: ~1215–2485
+  // Mobile overrides apply below 768px and are recalculated after viewport changes.
   mobileOverrides: {
     'stack-web':       { x: 2200, y: 1520 },       // was 1900 (off-screen left) → top-left visible area
     'about':           { x: 2180, y: 2100 },        // was 2050 (barely visible) → into landing frame
@@ -67,10 +86,8 @@ const CONFIG = {
       depth: 3,
       rotation: 0,
       data: {
-        name: '',
-        tagline: 'Non-Linear',
-        highlightWord: 'Creative.',
-        tagline2: '',
+        wordmark: 'ao-li',
+        ariaLabel: 'Ao Li. Design Engineer, Brand and Web, built with Claude Code.',
         subtitle: 'Design Engineer · Brand & Web · Built with Claude Code'
       }
     },

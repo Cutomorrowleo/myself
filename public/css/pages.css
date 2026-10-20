@@ -41,12 +41,14 @@
   color: var(--color-ink);
   cursor: pointer;
   opacity: 0;
+  pointer-events: none;
   transform: translateX(-20px);
   transition: background 0.3s ease, opacity 0.4s ease, transform 0.4s var(--ease-out-expo);
 }
 
 .page-back.visible {
   opacity: 1;
+  pointer-events: auto;
   transform: translateX(0);
 }
 

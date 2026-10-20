@@ -116,14 +116,33 @@ ul, ol {
   top: 20px;
   left: 24px;
   z-index: var(--z-nav);
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
 }
 
-.canvas-name img {
-  height: 26px;
-  width: auto;
+.botanical-wordmark__canvas {
+  position: relative;
   display: block;
+}
+
+.botanical-wordmark__canvas img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.botanical-wordmark__frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.botanical-wordmark--corner .botanical-wordmark__canvas {
+  width: 170px;
+  height: auto;
+  aspect-ratio: 814 / 234;
 }
 
 /* ── Floating Toolbar (center-top, FigJam style) ── */
@@ -296,22 +315,6 @@ ul, ol {
   height: 1px;
   background: rgba(0, 0, 0, 0.08);
   margin: 3px 0;
-}
-
-/* ── Made with Claude Code badge (bottom-left) ── */
-.claude-badge {
-  position: fixed;
-  bottom: 20px;
-  right: 24px;
-  z-index: var(--z-nav);
-  pointer-events: none;
-  user-select: none;
-}
-
-.claude-badge img {
-  width: 140px;
-  height: auto;
-  display: block;
 }
 
 /* ── Profile Avatar (top-right) ── */

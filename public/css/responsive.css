@@ -13,7 +13,7 @@
 }
 
 /* ── Tablet adjustments (768px – 1023px) ── */
-@media (max-width: 1023px) and (min-width: 769px) {
+@media (max-width: 1023px) and (min-width: 768px) {
   /* Floating toolbar — smaller on tablet */
   .floating-toolbar {
     top: 12px;
@@ -42,7 +42,7 @@
 }
 
 /* ── Mobile adjustments (768px and below) ── */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   /* Increase card tap targets */
   .card {
     min-height: 80px;
@@ -67,8 +67,7 @@
   /* ── Hide desktop-only UI elements ── */
   .floating-toolbar,
   .social-dock,
-  .tools-toolbar,
-  .claude-badge {
+  .tools-toolbar {
     display: none !important;
   }
 
@@ -100,6 +99,9 @@
     border-radius: 8px;
     transition: background 0.2s ease, color 0.2s ease;
     color: var(--color-ink-muted);
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
   }
 
   .mobile-nav__btn svg {
@@ -179,8 +181,9 @@
     left: 16px;
   }
 
-  .canvas-name img {
-    height: 18px;
+  .botanical-wordmark--corner .botanical-wordmark__canvas {
+    width: 138px;
+    height: auto;
   }
 
   /* Canvas elements are repositioned and resized via JS mobileOverrides.
@@ -214,6 +217,16 @@
   /* Hero headline — bigger on mobile */
   .hero-headline {
     font-size: clamp(3rem, 5vw + 1.5rem, 4.5rem);
+  }
+
+  .botanical-wordmark--hero {
+    --hero-wordmark-height: 110px;
+  }
+
+  .botanical-wordmark--hero .hero-subtitle {
+    margin-top: 6px;
+    font-size: 18px;
+    letter-spacing: 0.08em;
   }
 
   .hero-subtitle {
@@ -547,8 +560,7 @@
   /* Instant transitions */
   .card,
   .custom-cursor .cursor-ring,
-  .page-back,
-  .minimap {
+  .page-back {
     transition-duration: 0.01ms !important;
   }
 

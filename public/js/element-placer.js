@@ -10,15 +10,8 @@ class ElementPlacer {
   }
 
   placeAll(elements) {
-    const isMobile = window.innerWidth < 768;
-    const overrides = isMobile ? (CONFIG.mobileOverrides || {}) : {};
-
     for (const cfg of elements) {
-      // Apply mobile overrides if available
-      const mobileCfg = overrides[cfg.id];
-      const finalCfg = mobileCfg
-        ? { ...cfg, ...mobileCfg, data: cfg.data, type: cfg.type, depth: cfg.depth, rotation: cfg.rotation }
-        : cfg;
+      const finalCfg = this._getLayoutConfig(cfg);
 
       const el = this.createElement(finalCfg);
       if (el) {
@@ -27,6 +20,21 @@ class ElementPlacer {
         this.elements.set(finalCfg.id, el);
       }
     }
+  }
+
+  _getLayoutConfig(cfg) {
+    const overrides = window.innerWidth < 768 ? (CONFIG.mobileOverrides || {}) : {};
+    const override = overrides[cfg.id];
+    return override
+      ? { ...cfg, ...override, data: cfg.data, type: cfg.type, depth: cfg.depth, rotation: cfg.rotation }
+      : cfg;
+  }
+
+  refreshLayout(elements = CONFIG.elements) {
+    elements.forEach(cfg => {
+      const el = this.elements.get(cfg.id);
+      if (el) this.positionElement(el, this._getLayoutConfig(cfg));
+    });
   }
 
   createElement(cfg) {
@@ -64,21 +72,24 @@ class ElementPlacer {
     el.setAttribute('data-depth', cfg.depth || 1);
   }
 
-  // ── HERO — Umi-style centered headline with highlighted word ──
+  // ── HERO — botanical signature wordmark ──
   _createHero(cfg) {
     const el = document.createElement('div');
-    el.className = 'canvas-element hero-element';
+    const wordmark = cfg.data.wordmark;
+    el.className = 'canvas-element hero-element botanical-wordmark botanical-wordmark--hero';
     el.id = cfg.id;
-    const nameMarkup = cfg.data.name ? `<span class="hero-name">${cfg.data.name}</span> ` : '';
+    el.dataset.botanicalWordmark = wordmark;
     el.innerHTML = `
-      <h1 class="hero-headline">
-        ${nameMarkup}${cfg.data.tagline}
-        <span class="hero-highlight">${cfg.data.highlightWord}<svg class="hero-highlight__stroke" viewBox="0 0 237.91 37.29" preserveAspectRatio="none" aria-hidden="true"><path class="highlight-path" d="M52.55,15.15c-4.81-1.44-37.11,1.16-39.18.83-1.94-.52.75-11,2.49-12.6.62-.57,1.34-.7,3.02-.48,2.03.27,28.9-1.06,36.94-1.43,0,0,54.12-1.14,63.19-1.25,2.88-.04.6.59,3.99.36,7.21-.48,22.93.19,28.39-.29,4.38-.39,5.32-.39,9.51.05,3.6.38,27.06.55,29.72-.14.65-.17,1.13-.09,1.12.14.18.02,16.06.77,16.12.94.12.23.6.36,1.06.22.84-.25,17.97-.39,18.23.29.73,1.96-1.96,10.01-3.99,11.94-1.06,1.01-4.33.82-8.47.48-13-1.06-7.03-.13-20.13-.49-40.01-1.11-33.24-.92-44.02-.14-1.01-.71-4.95.94-7.32-.29-.99-.51-8.07-.65-9.65-.16-1.14.36-37.27-.8-41.32.71-7.41-1.22-36.17,1.1-39.69,1.31Z" fill="#feef38" opacity="0"/><path class="highlight-path" d="M44,24.04c-5.48-1.44-41.15,2.52-43.19,2.33-2.16-.43.45-11.03,2.32-12.72.66-.6,1.46-.77,3.33-.63,1.95.15,15.04-1.07,40.93-2.76,0,0,37.46-1.78,70.31-.64,3.21.11.64.59,4.42.56,9.63-.08,25.17,1.79,31.36,1.55,9.68-.36,6.69.57,16.87.67,8.02.08,23.57-1.01,25.75-1.66.71-.21,1.25-.17,1.26.06.44,0,18.05-.2,18.24.24.13.23.69.36,1.21.21,2.74-.55,20.74.75,21.05,1.9.27,1.04-.67,3.42-1.96,5.76-3.51,6.39-4.82,6.07-7.32,5.84-3.26-.3-5.63-.64-5.63-.64-9.83-1.23-12.49-.32-16.49-.27-1.23.02-3,.05-5.13.12-55.33,1.63-19.64.39-49.42.99-1.1-.76-5.59.64-8.15-.75-1.08-.59-8.9-1.2-10.66-.83-1,.21-39.98-2.83-45.4-.95-8.62-1.41-35.07.86-43.69,1.62Z" fill="#feef38" opacity="0"/><path class="highlight-path" d="M48.64,35.93c-3.99-1.59-35.33-1.62-38.07-2.27-1.83-.7,1.76-10.89,3.56-12.33.64-.51,1.35-.58,2.94-.21,2.92.67,32.52,1.3,35.58,1.35.42.34,1.77-.69,2-.29.84,1.1,46.85,1.42,47.85,1.42,5.68.03,9.88.02,11.02.03,2.77.01.57.59,3.83.41,6.95-.4,22.09.3,27.35-.26,4.21-.45,5.12-.42,9.17-.06,4.69.41,26.13-.16,28.61-.96.61-.2,1.08-.14,1.09.09.11,0,15.52.1,15.56.21.12.23.6.33,1.03.17.8-.23,17.26-1.43,17.55-.77.83,1.92-1.23,10.11-3.09,12.16-1.95,2.15-12.93,0-21.46,1.39-51.43.7-34.09-.24-49.15,1.06-.99-.7-4.81.99-7.12-.25-.97-.52-7.85-.61-9.39-.15-.66.2-9.81-.1-19.24-.32-9.43-.23-19.15-.42-20.97.23-5.42-1.17-26.51-.75-38.65-.66Z" fill="#feef38" opacity="0"/></svg></span>
-        ${cfg.data.tagline2}
-      </h1>
+      <span class="botanical-wordmark__canvas" aria-hidden="true">
+        <img class="botanical-wordmark__frame" src="/assets/brand/${wordmark}-frame-1.png" alt="" draggable="false">
+        <img class="botanical-wordmark__frame" src="/assets/brand/${wordmark}-frame-2.png" alt="" draggable="false">
+        <img class="botanical-wordmark__frame" src="/assets/brand/${wordmark}-frame-3.png" alt="" draggable="false">
+        <img class="botanical-wordmark__frame" src="/assets/brand/${wordmark}-frame-4.png" alt="" draggable="false">
+      </span>
       <p class="hero-subtitle">${cfg.data.subtitle}</p>
     `;
-    el.setAttribute('aria-label', `${cfg.data.tagline} ${cfg.data.highlightWord} — ${cfg.data.subtitle}`);
+    el.setAttribute('role', 'group');
+    el.setAttribute('aria-label', cfg.data.ariaLabel);
     return el;
   }
 
@@ -223,12 +234,12 @@ class ElementPlacer {
       el.setAttribute('role', 'button');
       el.setAttribute('tabindex', '0');
       el.addEventListener('click', () => {
-        if (window.__chaiPanel) window.__chaiPanel.open();
+        if (window.__chaiPanel) window.__chaiPanel.open(el);
       });
       el.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          if (window.__chaiPanel) window.__chaiPanel.open();
+          if (window.__chaiPanel) window.__chaiPanel.open(el);
         }
       });
     }
@@ -239,7 +250,7 @@ class ElementPlacer {
       el.setAttribute('tabindex', '0');
       const openGame = () => {
         if (window.__cardTransitions) {
-          window.__cardTransitions.openNarutoGame();
+          window.__cardTransitions.openNarutoGame(el);
         }
       };
       el.addEventListener('click', openGame);

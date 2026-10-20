@@ -4,7 +4,8 @@ from pathlib import Path
 from PIL import Image, ImageFilter
 
 
-ROOT = Path(r"C:\Users\26133\Documents\myself")
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE_DIR = ROOT / "scripts" / "source-assets"
 OUTPUT = ROOT / "public" / "assets" / "load-stickers"
 
 SOURCES = [
@@ -38,6 +39,13 @@ SOURCES = [
             (1420, 360, 2050, 724),
         ],
     ),
+]
+
+# Keep the original extraction coordinates while sourcing the retained sheets
+# from the repository instead of a developer-specific Downloads directory.
+SOURCES = [
+    (SOURCE_DIR / "_source-sheet-a.png", SOURCES[0][1]),
+    (SOURCE_DIR / "_source-sheet-b.png", SOURCES[1][1]),
 ]
 
 

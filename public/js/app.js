@@ -7,16 +7,15 @@
   'use strict';
 
   // ── Module references ──
-  let engine, placer, parallax, cursor, magnetic, nav, transitions, minimap, loader;
+  let engine, placer, parallax, cursor, magnetic, nav, transitions, loader;
+  let botanicalWordmarks = [];
+  let resizeTimer = null;
 
   // Expose for debugging / testing
   window.__playground = {};
 
   // ── Init ──
   function init() {
-    const awardsBadge = document.getElementById('awwwards');
-    if (awardsBadge) awardsBadge.remove();
-
     const viewport = document.querySelector('.viewport');
     const world = document.querySelector('.world');
 
@@ -31,6 +30,7 @@
     // 2. Element Placer — create all elements
     placer = new ElementPlacer(world);
     placer.placeAll(CONFIG.elements);
+    botanicalWordmarks = initBotanicalWordmarks();
 
     // 3. Center on hero
     engine.centerOnHero();
@@ -53,15 +53,12 @@
     transitions = new CardTransitions(engine, nav, cursor);
     window.__cardTransitions = transitions;
 
-    // 9. Minimap
-    minimap = new Minimap(engine);
-
     // Expose for testing
     window.__playground = { engine, transitions, nav };
 
     // 10. Wire up engine callbacks
     engine.onClickElement = (el, elementId) => {
-      transitions.openCard(elementId);
+      transitions.openCard(elementId, el);
     };
 
     engine.onDragStart = () => {
@@ -75,15 +72,36 @@
 
     engine.onPanUpdate = (panX, panY) => {
       parallax.update(panX, panY);
-      if (minimap) minimap.update();
     };
+
+    const scheduleLayoutRefresh = () => {
+      clearTimeout(resizeTimer);
+      const refresh = () => {
+        if (!engine) return;
+        if (engine.locked) {
+          resizeTimer = setTimeout(refresh, 250);
+          return;
+        }
+        placer.refreshLayout();
+        engine.refreshLayout();
+      };
+      resizeTimer = setTimeout(refresh, 120);
+    };
+    if (typeof ResizeObserver !== 'undefined') {
+      const viewportObserver = new ResizeObserver(scheduleLayoutRefresh);
+      viewportObserver.observe(viewport);
+      window.__playground.viewportObserver = viewportObserver;
+    } else {
+      window.addEventListener('resize', scheduleLayoutRefresh, { passive: true });
+    }
+    window.addEventListener('orientationchange', scheduleLayoutRefresh, { passive: true });
 
     // 11. Start loading sequence
     loader = new Loader(() => {
       revealElements();
       if (nav) nav.reveal();
+      playBotanicalWordmarks(0.35);
       showDragHint();
-      if (minimap) minimap.update();
     });
 
     loader.start();
@@ -92,6 +110,61 @@
     setTimeout(() => {
       startIdleAnimations();
     }, 3500);
+  }
+
+  function initBotanicalWordmarks() {
+    return Array.from(document.querySelectorAll('[data-botanical-wordmark]')).map(wordmark => {
+      const frames = Array.from(wordmark.querySelectorAll('.botanical-wordmark__frame'));
+      const reducedMotion = prefersReducedMotion();
+      let timeline = null;
+
+      const showComplete = () => {
+        gsap.set(frames, { opacity: 0 });
+        gsap.set(frames[frames.length - 1], { opacity: 1 });
+      };
+
+      const play = (delay = 0) => {
+        if (reducedMotion || !frames.length) {
+          showComplete();
+          return;
+        }
+
+        if (timeline) timeline.kill();
+        timeline = gsap.timeline({ delay, onComplete: showComplete });
+        timeline.set(frames, { opacity: 0 });
+        timeline.set(frames[0], { opacity: 1 });
+
+        frames.slice(1).forEach((frame, index) => {
+          const previousFrame = frames[index];
+          const start = 0.24 + index * 0.27;
+          timeline.to(previousFrame, {
+            opacity: 0,
+            duration: 0.13,
+            ease: 'sine.inOut'
+          }, start);
+          timeline.to(frame, {
+            opacity: 1,
+            duration: 0.13,
+            ease: 'sine.inOut'
+          }, start);
+        });
+      };
+
+      if (reducedMotion) {
+        showComplete();
+      } else {
+        showComplete();
+        wordmark.addEventListener('mouseenter', () => play());
+      }
+
+      return { play };
+    });
+  }
+
+  function playBotanicalWordmarks(delay = 0) {
+    botanicalWordmarks.forEach((wordmark, index) => {
+      wordmark.play(delay + index * 0.12);
+    });
   }
 
   // ── Reveal elements with stagger ──

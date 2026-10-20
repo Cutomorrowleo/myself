@@ -4,10 +4,15 @@ from pathlib import Path
 from PIL import Image, ImageFilter
 
 
-ROOT = Path(r"C:\Users\26133\Documents\myself")
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE_DIR = ROOT / "scripts" / "source-assets"
 SOURCE_A = Path(r"C:\Users\26133\Downloads\ChatGPT Image 2026年6月7日 19_58_14.png")
 SOURCE_B = Path(r"C:\Users\26133\Downloads\ChatGPT Image 2026年6月7日 19_55_23 (1).png")
 OUT = ROOT / "public" / "assets" / "home-stickers"
+
+# Repository-retained source sheets replace the original machine-specific paths.
+SOURCE_A = SOURCE_DIR / "_source-sheet-a.png"
+SOURCE_B = SOURCE_DIR / "_source-sheet-b.png"
 
 ASSETS = {
     "designer-default.png": (SOURCE_B, (8, 84, 462, 520)),
